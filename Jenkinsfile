@@ -8,7 +8,7 @@ node {
                 }
                 stage('Checkout'){
                     echo 'Checking out SCM'
-                    dir('src/github.com/Arvinderpal/jenkins-test-1') {
+                    dir('$SRC_PATH') {
                       checkout scm
                     }
                     //checkout scm
@@ -27,7 +27,7 @@ node {
                 }
         
                 stage('Test'){
-                    dir('$GOPATH/src/github.com/Arvinderpal/jenkins-test-1') {
+                    dir('src/github.com/Arvinderpal/jenkins-test-1') {
                       
                       //List all our project files with 'go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org'
                       
@@ -50,7 +50,7 @@ node {
                 }
             
                 stage('Build'){
-                  dir('$GOPATH/src/github.com/Arvinderpal/jenkins-test-1') {
+                  dir('src/github.com/Arvinderpal/jenkins-test-1') {
                     echo 'Building Executable'
                 
                     //Produced binary is $GOPATH/<name>
