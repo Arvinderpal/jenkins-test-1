@@ -8,7 +8,7 @@ node {
                 }
                 stage('Checkout'){
                     echo 'Checking out SCM'
-                    dir('$SRC_PATH') {
+                    dir('${SRC_PATH}') {
                       checkout scm
                     }
                     //checkout scm
