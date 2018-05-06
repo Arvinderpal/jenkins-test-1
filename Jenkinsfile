@@ -18,7 +18,7 @@ node {
                     sh 'go get github.com/tebeka/go2xunit'
                     
                     //or -update
-                    sh """cd ${GOPATH}/src/cmd/project/ && dep ensure"""
+                    sh """cd $GOPATH/src/cmd/project/ && dep ensure"""
                 }
         
                 stage('Test'){
