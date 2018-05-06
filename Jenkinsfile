@@ -8,7 +8,7 @@ node {
                 }
                 stage('Checkout'){
                     echo 'Checking out SCM'
-                    dir('src/github.com/Arvinderpal/jenkins-test-1') {
+                    dir($SRC_PATH) {
                       checkout scm
                     }
                     //checkout scm
