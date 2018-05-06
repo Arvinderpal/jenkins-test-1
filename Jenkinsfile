@@ -32,19 +32,20 @@ node {
                       //List all our project files with 'go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org'
                       
                       //Push our project files relative to ./src
-                      sh 'go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org > projectPaths'
+                      //sh 'go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org > projectPaths'
                       
                       //Print them with 'awk '$0="./src/"$0' projectPaths' in order to get full relative path to $GOPATH
-                      def paths = sh returnStdout: true, script: """awk '\$0="./src/"\$0' projectPaths"""
+                      //def paths = sh returnStdout: true, script: """awk '\$0="./src/"\$0' projectPaths"""
                     
-                      echo 'Vetting'
-                      sh """go tool vet ${paths}"""
+                      //echo 'Vetting'
+                      //sh """go tool vet ${paths}"""
 
-                      echo 'Linting'
-                      sh """golint ${paths}"""
+                      //echo 'Linting'
+                      //sh """golint ${paths}"""
                     
                       echo 'Testing'
-                      sh """go test -race -cover ${paths}"""
+                      //sh """go test -race -cover ${paths}"""
+                      sh """go test """
                     }
                 }
             
