@@ -18,7 +18,7 @@ node {
                     sh 'go get github.com/tebeka/go2xunit'
                     
                     //or -update
-                    sh """cd $GOPATH/src/cmd/project/ && dep ensure"""
+                    sh """cd $GOPATH && dep ensure"""
                 }
         
                 stage('Test'){
@@ -44,8 +44,8 @@ node {
                 stage('Build'){
                     echo 'Building Executable'
                 
-                    //Produced binary is $GOPATH/src/cmd/project/project
-                    sh """cd $GOPATH/src/cmd/project/ && go build -ldflags '-s'"""
+                    //Produced binary is $GOPATH/<name
+                    sh """cd $GOPATH && go build -ldflags '-s'"""
                 }
             }
         }
