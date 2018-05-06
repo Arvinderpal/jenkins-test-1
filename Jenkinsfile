@@ -3,10 +3,12 @@ node {
         ws("${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/") {
             withEnv(["GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"]) {
                 env.PATH="${GOPATH}/bin:$PATH"
-                
+                environment {
+                  SRC_PATH = 'src/github.com/Arvinderpal/jenkins-test-1'
+                }
                 stage('Checkout'){
                     echo 'Checking out SCM'
-                    dir('$GOPATH/src/github.com/Arvinderpal/jenkins-test-1') {
+                    dir('src/github.com/Arvinderpal/jenkins-test-1') {
                       checkout scm
                     }
                     //checkout scm
