@@ -6,7 +6,10 @@ node {
                 
                 stage('Checkout'){
                     echo 'Checking out SCM'
-                    checkout scm
+                    dir('$GOPATH/src/github.com/Arvinderpal/jenkins-test-1') {
+                      checkout scm
+                    }
+                    //checkout scm
                 }
                 
                 stage('Pre Test'){
@@ -22,30 +25,34 @@ node {
                 }
         
                 stage('Test'){
+                    dir('$GOPATH/src/github.com/Arvinderpal/jenkins-test-1') {
+                      
+                      //List all our project files with 'go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org'
+                      
+                      //Push our project files relative to ./src
+                      sh 'go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org > projectPaths'
+                      
+                      //Print them with 'awk '$0="./src/"$0' projectPaths' in order to get full relative path to $GOPATH
+                      def paths = sh returnStdout: true, script: """awk '\$0="./src/"\$0' projectPaths"""
                     
-                    //List all our project files with 'go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org'
-                    //Push our project files relative to ./src
-                    sh 'cd $GOPATH && go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org > projectPaths'
-                    
-                    //Print them with 'awk '$0="./src/"$0' projectPaths' in order to get full relative path to $GOPATH
-                    def paths = sh returnStdout: true, script: """awk '\$0="./src/"\$0' projectPaths"""
-                    
-                    echo 'Vetting'
+                      echo 'Vetting'
+                      sh """go tool vet ${paths}"""
 
-                    sh """cd $GOPATH && go tool vet ${paths}"""
-
-                    echo 'Linting'
-                    sh """cd $GOPATH && golint ${paths}"""
+                      echo 'Linting'
+                      sh """golint ${paths}"""
                     
-                    echo 'Testing'
-                    sh """cd $GOPATH && go test -race -cover ${paths}"""
+                      echo 'Testing'
+                      sh """go test -race -cover ${paths}"""
+                    }
                 }
             
                 stage('Build'){
+                  dir('$GOPATH/src/github.com/Arvinderpal/jenkins-test-1') {
                     echo 'Building Executable'
                 
-                    //Produced binary is $GOPATH/<name
-                    sh """cd $GOPATH && go build -ldflags '-s'"""
+                    //Produced binary is $GOPATH/<name>
+                    sh """go build -ldflags '-s'"""
+                  }
                 }
             }
         }
