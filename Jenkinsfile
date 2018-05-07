@@ -4,22 +4,19 @@ node {
             withEnv(["GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"]) {
                 env.PATH="${GOPATH}/bin:$PATH"
                 environment {
+                  // FIXME: this does not work ...
                   PROJECTDIR = "src/github.com/Arvinderpal/jenkins-test-1"
                 }
+
                 stage('Checkout'){
-                    def PROJECTDIR_2 = "src/github.com/Arvinderpal/jenkins-test-1"
                     echo '###Checking out SCM###'
-                    echo "PROJECTDIR: ${PROJECTDIR}"
-                    echo "PROJECTDIR: ${PROJECTDIR_2}"
                     dir('src/github.com/Arvinderpal/jenkins-test-1') {
                       checkout scm
                     }
-                    //checkout scm
                 }
                 
                 stage('Pre Test'){
                     echo '---Pulling Dependencies---'
-                    echo "PROJECTDIR: ${PROJECTDIR}"
                     sh 'go version'
                     sh 'go get -u github.com/golang/lint/golint'
                     //sh 'go get github.com/tebeka/go2xunit'
@@ -28,7 +25,7 @@ node {
                 stage('Test'){    
                     // List all our project files
                     // Push our project files relative to ./src
-                    sh """cd ${PROJECTDIR} && go list ./... | grep -v /vendor/ > projectPaths"""
+                    sh """cd src/github.com/Arvinderpal/jenkins-test-1 && go list ./... | grep -v /vendor/ > projectPaths"""
                     
                     //Print them with 'awk '$0="./src/"$0' projectPaths' in 
                     // order to get full relative path to $GOPATH
