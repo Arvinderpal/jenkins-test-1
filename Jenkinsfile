@@ -4,11 +4,13 @@ node {
             withEnv(["GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"]) {
                 env.PATH="${GOPATH}/bin:$PATH"
                 environment {
-                  PROJECTDIR = 'src/github.com/Arvinderpal/jenkins-test-1'
+                  PROJECTDIR = "src/github.com/Arvinderpal/jenkins-test-1"
                 }
                 stage('Checkout'){
+                    def PROJECTDIR_2 = "src/github.com/Arvinderpal/jenkins-test-1"
                     echo '###Checking out SCM###'
                     echo "PROJECTDIR: ${PROJECTDIR}"
+                    echo "PROJECTDIR: ${PROJECTDIR_2}"
                     dir('src/github.com/Arvinderpal/jenkins-test-1') {
                       checkout scm
                     }
