@@ -31,13 +31,13 @@ node {
                     // order to get full relative path to $GOPATH
                     def paths = sh returnStdout: true, script: """awk '\$0="./src/"\$0' projectPaths"""
                   
-                    //echo 'Vetting'
+                    echo '~~~Vetting~~~'
                     sh """go tool vet ${paths}"""
 
-                    //echo 'Linting'
-                    //sh """golint ${paths}"""
+                    echo '~~~Linting~~~'
+                    sh """golint ${paths}"""
                   
-                    echo 'Testing'
+                    echo '~~~Testing~~~'
                     //sh """go test -race -cover ${paths}"""
                     sh """go test ${paths}"""
                     
