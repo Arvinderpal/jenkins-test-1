@@ -4,7 +4,8 @@ node {
             withEnv(["GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"]) {
                 env.PATH="${GOPATH}/bin:$PATH"
                 environment {
-                  SRC_PATH = 'src/github.com/Arvinderpal/jenkins-test-1'
+                  PROJECTDIR = 'src/github.com/Arvinderpal/jenkins-test-1'
+                  echo "${PROJECTDIR}"
                 }
                 stage('Checkout'){
                     echo '###Checking out SCM###'
@@ -25,7 +26,7 @@ node {
                 stage('Test'){    
                     // List all our project files
                     // Push our project files relative to ./src
-                    sh 'cd $SRC_PATH && go list ./... | grep -v /vendor/ > projectPaths'
+                    sh 'cd ${PROJECTDIR} && go list ./... | grep -v /vendor/ > projectPaths'
                     
                     //Print them with 'awk '$0="./src/"$0' projectPaths' in 
                     // order to get full relative path to $GOPATH
