@@ -7,7 +7,7 @@ node {
                   SRC_PATH = 'src/github.com/Arvinderpal/jenkins-test-1'
                 }
                 stage('Checkout'){
-                    echo 'Checking out SCM'
+                    echo '###Checking out SCM###'
                     dir('src/github.com/Arvinderpal/jenkins-test-1') {
                       checkout scm
                     }
@@ -15,10 +15,10 @@ node {
                 }
                 
                 stage('Pre Test'){
-                    echo 'Pulling Dependencies'
+                    echo '---Pulling Dependencies---'
             
                     sh 'go version'
-                    //sh 'go get -u github.com/golang/lint/golint'
+                    sh 'go get -u github.com/golang/lint/golint'
                     //sh 'go get github.com/tebeka/go2xunit'
                 }
         
@@ -45,7 +45,7 @@ node {
             
                 stage('Build'){
                   dir('src/github.com/Arvinderpal/jenkins-test-1') {
-                    echo 'Building Executable'
+                    echo '+++Building Executable+++'
                 
                     //Produced binary is $GOPATH/<name>
                     sh """go build -ldflags '-s'"""
