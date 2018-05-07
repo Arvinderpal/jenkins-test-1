@@ -23,15 +23,13 @@ node {
                 }
         
                 stage('Test'){    
-                  dir('src/github.com/Arvinderpal/jenkins-test-1'){   
                     // List all our project files
                     // Push our project files relative to ./src
-                    sh 'go list ./... | grep -v /vendor/ > projectPaths'
+                    sh 'cd $SRC_PATH && go list ./... | grep -v /vendor/ > projectPaths'
                     
                     //Print them with 'awk '$0="./src/"$0' projectPaths' in 
                     // order to get full relative path to $GOPATH
                     def paths = sh returnStdout: true, script: """awk '\$0="./src/"\$0' projectPaths"""
-                  }
                   
                     echo '~~~Vetting~~~'
                     sh """go tool vet ${paths}"""
