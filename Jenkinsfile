@@ -29,7 +29,7 @@ node {
                       // Push our project files relative to ./src
                       // FIXME (awander): this does not work with jenkins. The
                       // output format is not same as if run on laptop. 
-                      sh 'go list ./... | grep -v /vendor/
+                      sh 'go list ./... | grep -v /vendor/'
                       sh 'go list ./... | grep -v /vendor/ > projectPaths'
                       
                       //Print them with 'awk '$0="./src/"$0' projectPaths' in 
